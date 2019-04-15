@@ -18,13 +18,12 @@ install:
     - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.4/VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z
     - 7z x ./master.zip -y -o%sdl%
     - 7z x ./VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z -y -o%vcltl%
-    - C:/projects/vc-ltl/Install.cmd /I
-    
+
 before_build:
     - echo "test sdl and vcltl path"
-    - test -e %sdl%CMakeLists.txt && echo "exist" || echo %sdl%"CMakeLists.txt Not exist" && appveyor exit
-    - test -e %vcltl%VC-LTL" helper for cmake.cmake" && echo "exist" || echo %vcltl%VC-LTL helper for cmake.cmake && appveyor exit
-
+    - test -e %sdl%CMakeLists.txt && echo "exist" || echo %sdl%CMakeLists.txt Not exist && exit 1
+    - test -e %vcltl%VC-LTL" helper for cmake.cmake" && echo exist || echo %vcltl%VC-LTL helper for cmake.cmake Not exist && exit 1
+    - C:/projects/vc-ltl/Install.cmd /I
     - cp %vcltl%"VC-LTL helper for cmake".cmake %sdl%
     - echo include("VC-LTL helper for cmake.cmake") >> %sdl%CMakeLists.txt
     - echo set(CMAKE_C_FLAGS_RELEASE "/MT") >> %sdl%CMakeLists.txt
