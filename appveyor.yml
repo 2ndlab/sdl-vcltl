@@ -39,13 +39,13 @@ build_script:
 after_build:
     # copy include files
     - cp -r %sdl%include %sdl%build/Release/
-    - cd %sdl%
-    - set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-    - 7z a %LatestTag%.zip ../build/Release/*
-    - appveyor PushArtifact %LatestTag%.zip
+    #- cd %sdl%
+    #- set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+    #- 7z a %LatestTag%.zip ../build/Release/*
+    #- appveyor PushArtifact %LatestTag%.zip
     
-#artifacts:
- #   - path: build/Release
+artifacts:
+    - path: build/Release
     #artifacts path name must be appveyor API
   
 deploy:
@@ -54,4 +54,4 @@ deploy:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
       draft: false
       on:  
-        APPVEYOR_REPO_TAG: true
+        APPVEYOR_REPO_TAG: false
