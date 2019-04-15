@@ -1,0 +1,47 @@
+version: 'sdl-vcltl.0.0.{build}'
+
+os: Visual Studio 2017
+
+platform:
+    - x64
+
+environment:
+  vcltl: C:/projects/vc-ltl/
+  sdl: C:/projects/sdl/
+  
+init:
+    - cmake --version
+  
+install:
+    - echo "download and install vcltl:"
+    - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.4/VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z
+    - 7z x ./VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z -y -o%vcltl%
+    - C:/projects/vc-ltl/Install.cmd /I
+    
+before_build:
+    - echo "test sdl and vcltl path"
+    - test -e %sdl%CMakeLists.txt && echo "exist" || echo %sdl%"CMakeLists.txt Not exist" && appveyor exit
+    - test -e %vcltl%VC-LTL" helper for cmake.cmake" && echo "exist" || echo %vcltl%VC-LTL helper for cmake.cmake && appveyor exit
+
+    - cp %vcltl%"VC-LTL helper for cmake".cmake %sdl%
+    - echo include("VC-LTL helper for cmake.cmake") >> %sdl%CMakeLists.txt
+    - echo set(CMAKE_C_FLAGS_RELEASE "/MT") >> %sdl%CMakeLists.txt
+    - tail -n 5 %sdl%CMakeLists.txt    
+    
+build_script:
+    - cmake -G"Visual Studio 15 2017 Win64" %sdl%CMakeLists.txt -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
+    - cmake --build build --config Release
+
+after_build:
+    - cp -r %sdl%include %sdl%build/Release/
+    
+artifacts:
+    - path: build/Release
+  
+deploy:
+    - provider: GitHub
+      auth_token:
+        secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
+      draft: true
+      on:
+        APPVEYOR_REPO_TAG: ture
