@@ -39,15 +39,21 @@ build_script:
 after_build:
     # copy include files
     - cp -r %sdl%include %sdl%build/Release/
+    - cd %sdl%
+    - set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+    - 7z a %LatestTag%.zip ../build/Release/*
+    - appveyor PushArtifact %LatestTag%.zip
     
-artifacts:
-    - path: build/Release
+#artifacts:
+ #   - path: build/Release
     #artifacts path name must be appveyor API
   
 deploy:
     - provider: GitHub
+      tag: %LatestTag%
       auth_token:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
-      draft: true
+      draft: false
       on:
-        APPVEYOR_REPO_TAG: ture
+      branch: master     
+        APPVEYOR_REPO_TAG: true
