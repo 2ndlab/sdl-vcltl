@@ -7,7 +7,7 @@ platform:
 
 environment:
   vcltl: C:/projects/vc-ltl/
-  sdl: C:/projects/sdl/
+  sdl: C:/projects/sdl-vcltl/
   
 init:
     - cmake --version
