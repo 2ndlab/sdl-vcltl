@@ -13,8 +13,10 @@ init:
     - cmake --version
   
 install:
-    - echo "download and install vcltl:"
+    - echo "download and install vcltl and sdl:"
+    - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
     - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.4/VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z
+    - 7z x ./master.zip -y -o%sdl%
     - 7z x ./VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z -y -o%vcltl%
     - C:/projects/vc-ltl/Install.cmd /I
     
