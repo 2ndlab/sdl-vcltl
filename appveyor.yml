@@ -18,7 +18,7 @@ install:
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
     - rm -f ./master.zip
     - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/archive/master.zip
-    - 7z x ./master.zip -y -o./ && mv./VC-LTL-master/* %vcltl%
+    - 7z x ./master.zip -y -o./ && mv ./VC-LTL-master/* %vcltl%
     - rm -f ./master.zip
 
 before_build:
