@@ -14,7 +14,7 @@ init:
   
 install:
     # download vcltl and sdl:
-    - mkdir %vcltl% 
+    - mkdir C:/projects/vc-ltl/
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
     - rm -f ./master.zip
