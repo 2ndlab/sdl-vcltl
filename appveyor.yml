@@ -15,9 +15,11 @@ init:
 install:
     # download vcltl and sdl:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
-    - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.4/VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
-    - 7z x ./VC-LTL-4.0.1.4-Preview-Binary-VS2017.7z -y -o%vcltl%
+    - rm -f ./master.zip
+    - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/archive/master.zip
+    - 7z x ./master.zip -y -o./ && mv./VC-LTL-master/* %vcltl%
+    - rm -f ./master.zip
 
 before_build:
     # test sdl and vcltl path
@@ -39,6 +41,7 @@ build_script:
 after_build:
     # copy include files
     - cp -r %sdl%include %sdl%build/Release/
+    - cp -r %sdl%src %sdl%build/Release/
     #- cd %sdl%
     #- set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
     #- 7z a %LatestTag%.zip ../build/Release/*
@@ -54,4 +57,4 @@ deploy:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
       draft: false
       on:  
-        APPVEYOR_REPO_TAG: false
+        APPVEYOR_REPO_TAG: true
