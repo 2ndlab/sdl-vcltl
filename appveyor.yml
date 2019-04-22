@@ -1,4 +1,4 @@
-version: 'sdl-vcltl.0.0.{build}'
+version: 'sdl-vcltl.2.0.9.{build}'
 
 os: Visual Studio 2017
 
@@ -17,6 +17,7 @@ install:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
     - rm -f ./master.zip
+    # 
     - mkdir "%vcltl%"
     - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.0.28/VC-LTL-4.0.0.28-Binary-VS2017.7z
     - 7z x ./*.7z -y -o%vcltl%
@@ -40,16 +41,20 @@ build_script:
     - cmake --build build --config Release
 
 after_build:
-    # copy include files
+    # remove unnecessary files
+    - rm -f %sdl%build/Release/*.exp
+    - rm -f %sdl%build/Release/*.pdb
+    - rm -f %sdl%build/Release/SDL2-static.lib
+    # copy include and source code files
     - cp -r %sdl%include %sdl%build/Release/
     - cp -r %sdl%src %sdl%build/Release/
     #- cd %sdl%
     #- set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-    #- 7z a %LatestTag%.zip ../build/Release/*
-    #- appveyor PushArtifact %LatestTag%.zip
+    - 7z a sdl-vcltl.7z %sdl%build/Release/*
+    - appveyor PushArtifact sdl-vcltl.7z
     
-artifacts:
-    - path: build/Release
+#artifacts:
+    #- path: build/Release
     #artifacts path name must be appveyor API
   
 deploy:
