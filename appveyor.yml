@@ -51,7 +51,8 @@ after_build:
     #- cd %sdl%
     #- set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
     - 7z a sdl-vcltl.7z %sdl%build/Release/*
-    - appveyor PushArtifact sdl-vcltl.7z
+    - mv sdl-vcltl.7z sdl-vcltl-$(date -u +"%Y%m%d%a").7z
+    - appveyor PushArtifact sdl-vcltl-$(date -u +"%Y%m%d%a").7z
     
 #artifacts:
     #- path: build/Release
