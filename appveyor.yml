@@ -14,7 +14,7 @@ init:
   
 install:
     - ps: |
-        $env:TIME_STRING=(get-date -UFormat "%Y-%m-%d").ToString()
+        $env:TIME_STRING=(get-date -UFormat "%Y%m%d%a").ToString()
     - ps: Write-Host $env:TIME_STRING
     - exit 1
     # download vcltl and sdl:
