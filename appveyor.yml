@@ -16,6 +16,8 @@ install:
     - ps: |
         $env:TIME_STRING=(get-date -UFormat "%Y%m%d%a").ToString()
     - ps: Write-Host $env:TIME_STRING
+    - touch 1.txt
+    - 7z a $($env:TIME_STRING).7z ./1.txt
     - exit 1
     # download vcltl and sdl:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
