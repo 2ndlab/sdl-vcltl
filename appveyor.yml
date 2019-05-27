@@ -13,7 +13,7 @@ init:
     - cmake --version
   
 install:
-    - $env:sysdate='Get-Date -UFormat "%Y%m%d%a"'
+    - $env:sysdate=$(Get-Date -UFormat "%Y%m%d%a")
     - $env:sysdate
     - exit 1
     # download vcltl and sdl:
