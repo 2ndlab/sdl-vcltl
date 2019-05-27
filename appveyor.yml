@@ -13,8 +13,7 @@ init:
     - cmake --version
   
 install:
-    - set sysdate=%DATE%
-    - %sysdate%
+    - %DATE%
     - exit 1
     # download vcltl and sdl:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
