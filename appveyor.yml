@@ -13,16 +13,17 @@ init:
     - cmake --version
   
 install:
-    - ps: |
-        $env:TIME_STRING=(get-date -UFormat "%Y%m%d%a").ToString()
-    - ps: Write-Host $env:TIME_STRING
-    - touch 1.txt
-    - 7z a %TIME_STRING%.7z ./1.txt
-    - exit 1
+    - ps: $env:TIME_STRING=(get-date -UFormat "%Y%m%d%a").ToString()
+    #- ps: Write-Host $env:TIME_STRING
+    #- touch 1.txt
+    #- 7z a %TIME_STRING%.7z ./1.txt
+    #- exit 1
+    
     # download vcltl and sdl:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
     - rm -f ./master.zip
+    
     # 
     - mkdir "%vcltl%"
     - appveyor DownloadFile https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.0.28/VC-LTL-4.0.0.28-Binary-VS2017.7z
@@ -33,12 +34,15 @@ before_build:
     # test sdl and vcltl path
     - test -e %sdl%CMakeLists.txt && echo "exist" || echo %sdl%CMakeLists.txt Not exist && exit 1
     - test -e %vcltl%VC-LTL" helper for cmake.cmake" && echo exist || echo %vcltl%VC-LTL helper for cmake.cmake Not exist && exit 1
+    
     # install vcltl
     - C:/projects/vc-ltl/Install.cmd /I
+    
     # import vcltl.cmake and set cmake projects /MT
     - cp %vcltl%"VC-LTL helper for cmake".cmake %sdl%
     - echo include("VC-LTL helper for cmake.cmake") >> %sdl%CMakeLists.txt
     - echo set(CMAKE_C_FLAGS_RELEASE "/MT") >> %sdl%CMakeLists.txt
+    
     # check file
     - tail -n 2 %sdl%CMakeLists.txt    
     
@@ -51,14 +55,15 @@ after_build:
     - rm -f %sdl%build/Release/*.exp
     - rm -f %sdl%build/Release/*.pdb
     - rm -f %sdl%build/Release/SDL2-static.lib
+    
     # copy include and source code files
     - cp -r %sdl%include %sdl%build/Release/
     - cp -r %sdl%src %sdl%build/Release/
     #- cd %sdl%
     #- set LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-    - 7z a sdl-vcltl.7z %sdl%build/Release/*
-    - mv sdl-vcltl.7z sdl-vcltl-$(date -u +"%Y%m%d%a").7z
-    - appveyor PushArtifact sdl-vcltl-$(date -u +"%Y%m%d%a").7z
+    
+    - 7z a sdl-vcltl-%TIME_STRING%.7z %sdl%build/Release/*
+    - appveyor PushArtifact sdl-vcltl-%TIME_STRING%.7z
     
 #artifacts:
     #- path: build/Release
