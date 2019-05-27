@@ -13,8 +13,9 @@ init:
     - cmake --version
   
 install:
-    - cmd: set VERSION_DATE=%DATE:~10,4%.%DATE:~4,2%.%DATE:~7,2%
-    - %VERSION_DATE%
+    - ps: |
+        $env:TIME_STRING=(get-date -UFormat "%Y-%m-%d").ToString()
+    - $env:TIME_STRING
     # download vcltl and sdl:
     - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
     - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
