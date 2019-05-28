@@ -9,7 +9,9 @@ environment:
   vcltl: C:/projects/vc-ltl/
   sdl: C:/projects/sdl-vcltl/
   vcltl-url: https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.9/VC-LTL-4.0.1.9-Preview-Binary-VS2017.7z
-  
+
+skip_tags: true
+
 init:
     - cmake --version
   
@@ -75,5 +77,6 @@ deploy:
       auth_token:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
       draft: false
+      tag: sdl-vcltl-%TIME_STRING%
       on:  
         APPVEYOR_REPO_TAG: false
