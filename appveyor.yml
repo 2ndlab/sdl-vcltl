@@ -8,7 +8,7 @@ platform:
 environment:
   vcltl: C:/projects/vc-ltl/
   sdl: C:/projects/sdl-vcltl/
-  vcltl-url: https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.9/VC-LTL-4.0.1.9-Preview-Binary-VS2019.7z
+  vcltl-url: https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.9/VC-LTL-4.0.1.9-Preview-Binary-VS2017.7z
   
 init:
     - cmake --version
@@ -33,7 +33,7 @@ install:
 
 before_build:
     # test sdl and vcltl path
-    - test -e %sdl%CMakeLists.txt && echo "exist" || echo %sdl%CMakeLists.txt Not exist && exit 1
+    - test -e %sdl%CMakeLists.txt && echo exist || echo %sdl%CMakeLists.txt Not exist && exit 1
     - test -e %vcltl%VC-LTL" helper for cmake.cmake" && echo exist || echo %vcltl%VC-LTL helper for cmake.cmake Not exist && exit 1
     
     # install vcltl
@@ -48,7 +48,7 @@ before_build:
     - tail -n 2 %sdl%CMakeLists.txt    
     
 build_script:
-    - cmake -G"Visual Studio 16 2019" -A Win64 %sdl%CMakeLists.txt -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
+    - cmake -G"Visual Studio 15 2017 Win64" %sdl%CMakeLists.txt -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
     - cmake --build build --config Release
 
 after_build:
