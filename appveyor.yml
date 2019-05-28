@@ -74,6 +74,7 @@ after_build:
   
 deploy:
     - provider: GitHub
+      description: 'weekly build sdl-vcltl' 
       auth_token:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
       draft: false
