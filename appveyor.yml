@@ -8,8 +8,7 @@ platform:
 environment:
   vcltl: C:/projects/vc-ltl/
   sdl: C:/projects/sdl-vcltl/
-  vcltl-url: https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.9/VC-LTL-4.0.1.9-Preview-Binary-VS2017.7z
-
+  vcltl-url: https://github.com/Chuyu-Team/VC-LTL/releases/download/4.0.1.10/VC-LTL-4.0.1.10-Preview-Binary-VS2017.7z
 skip_tags: true
 
 init:
