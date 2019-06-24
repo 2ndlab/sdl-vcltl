@@ -1,4 +1,4 @@
-version: 'sdl-vcltl.2.0.9.{build}'
+version: 'sdl-vcltl.{build}'
 
 os: Visual Studio 2017
 
@@ -22,9 +22,9 @@ install:
     #- exit 1
     
     # download vcltl and sdl:
-    - appveyor DownloadFile https://github.com/SDL-mirror/SDL/archive/master.zip
-    - 7z x ./master.zip -y -o./ && mv ./SDL-master/* %sdl%
-    - rm -f ./master.zip
+    - appveyor DownloadFile http://hg.libsdl.org/SDL/archive/tip.zip
+    - 7z x ./*.zip -y -o./ && mv ./SDL-*/* %sdl%
+    - rm -f ./*.zip
     
     # 
     - mkdir "%vcltl%"
@@ -77,6 +77,6 @@ deploy:
       auth_token:
         secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
       draft: false
-      tag: SDL%TIME_STRING%
+      tag: sdl-vcltl-%TIME_STRING%
       on:  
         APPVEYOR_REPO_TAG: false
