@@ -75,7 +75,7 @@ deploy:
     - provider: GitHub
       description: 'weekly build sdl-vcltl' 
       auth_token:
-        secure: b7z/bl9MpzzCY+CYah15JF9aJbut5gtIWcpiZOoZpVc41W7NmKOOeB40RO7HiiK/
+        secure: $env:auth_token
       draft: false
       tag: sdl-vcltl-%TIME_STRING%
       on:  
