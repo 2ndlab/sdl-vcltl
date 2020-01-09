@@ -54,9 +54,9 @@ build_script:
 
 after_build:
     # remove unnecessary files
-    - rm -f %sdl%build/Release/*.exp
-    - rm -f %sdl%build/Release/*.pdb
-    - rm -f %sdl%build/Release/SDL2-static.lib
+    #- rm -f %sdl%build/Release/*.exp
+    #- rm -f %sdl%build/Release/*.pdb
+    #- rm -f %sdl%build/Release/SDL2-static.lib
     
     # copy include and source code files
     - cp -r %sdl%include %sdl%build/Release/
