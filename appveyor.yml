@@ -22,7 +22,7 @@ install:
     #- exit 1
     
     # download vcltl and sdl:
-    - appveyor DownloadFile http://hg.libsdl.org/SDL/archive/tip.zip
+    - appveyor DownloadFile https://github.com/libsdl-org/SDL/archive/refs/heads/main.zip
     - 7z x ./*.zip -y -o./ && mv ./SDL-*/* %sdl%
     - rm -f ./*.zip
     
